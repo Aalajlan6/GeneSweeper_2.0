@@ -2,11 +2,13 @@ import requests
 from bs4 import BeautifulSoup
 import csv
 import json
+#import time
+#start_time = time.time()
 
 # Define URLs and login credentials
 login_url = 'https://signon.jgi.doe.gov/signon/create'  # URL for the login page
 csv_file_path = './Link_Output_1.csv'  # CSV with links to scrape
-output_file_path = 'output.txt'  # Output file path
+output_file_path = 'output.fasta'  # Output file path
 div_id = 'content_other'  # Change this to the div you want to scrape
 
 # Create a session object to persist cookies and login info
@@ -66,4 +68,5 @@ if login_response.ok:
 
 else:
     print("Login failed.")
+    #print("--- %s seconds ---" % (time.time() - start_time))
     #print(login_response.text)  # Print the response content for debugging
