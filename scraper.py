@@ -36,7 +36,7 @@ if login_response.ok:
     with open(csv_file_path, 'r') as csv_file, open(output_file_path, 'w') as output_file:
         csv_reader = csv.reader(csv_file)
         for row in csv_reader:
-            url = row[1]  
+            url = row[1]  # URL is in the second column
 
             try:
                 # Now access the page after logging in
@@ -50,9 +50,10 @@ if login_response.ok:
                 div_content = soup.find('div', id=div_id)
                 
                 if div_content:
-                    text_content = div_content.get_text(strip=True)
-                    output_file.write(f"URL: {url}\n")
-                    output_file.write(f"Extracted Text:\n{text_content}\n\n")
+                    text1 = div_content.find('font').get_text(strip=True)
+                    text2 = div_content.find('font').next_sibling.strip()
+                    text_content = f"{text1}\n{text2}"
+                    output_file.write(f"{text_content}\n")
                 else:
                     output_file.write(f"URL: {url}\n")
                     output_file.write("Error: Div not found\n\n")
@@ -65,4 +66,4 @@ if login_response.ok:
 
 else:
     print("Login failed.")
-    print(login_response.text)  # Print the response content for debugging
+    #print(login_response.text)  # Print the response content for debugging
